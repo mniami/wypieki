@@ -1,16 +1,21 @@
 package com.bydgoszcz.worldsimulation.simulations
 
+import com.bydgoszcz.worldsimulation.actions.ActionExecutor
 import com.bydgoszcz.worldsimulation.interceptors.Interceptor
 import com.bydgoszcz.worldsimulation.phases.Phase
 import com.bydgoszcz.worldsimulation.utils.Log
 import com.bydgoszcz.worldsimulation.utils.withIn
 import com.bydgoszcz.worldsimulation.worlds.World
 
-class DefaultSimulation(private val world: World = World(),
-                        private var state: SimulationState = SimulationState.UNKNOWN,
-                        private val log : Log = Log(),
-                        private val phases: List<Phase>,
-                        val interceptors : List<Interceptor>) {
+class Simulation(private val world: World = World(),
+                 private var state: SimulationState = SimulationState.UNKNOWN,
+                 private val log : Log = Log(),
+                 private val phases: List<Phase>,
+                 val interceptors : List<Interceptor>) {
+    private val actionExecutor = ActionExecutor(world)
+
+    fun getActionExecutor() : ActionExecutor = actionExecutor
+
     fun start() {
         if (state.withIn(SimulationState.STARTED, SimulationState.PAUSED)) {
             throw Exception("Already started")
