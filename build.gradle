@@ -31,6 +31,8 @@ apply plugin: 'kotlin'
 dependencies {
     implementation 'org.jsoup:jsoup:1.11.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    testImplementation "org.testng:testng:6.13"
+    testImplementation "org.mockito:mockito-core:2.13.0"
 }
 compileKotlin {
     kotlinOptions {

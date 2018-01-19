@@ -1,11 +1,11 @@
 package com.bydgoszcz.worldsimulation.consoles
 
 import com.bydgoszcz.worldsimulation.interceptors.LogInterceptor
-import com.bydgoszcz.worldsimulation.simulations.Simulation
+import com.bydgoszcz.worldsimulation.simulations.DefaultSimulation
 import com.bydgoszcz.worldsimulation.utils.Log
 
 class CommandLineConsole(private val log: Log = Log(),
-                         private val simulation: Simulation,
+                         private val simulation: DefaultSimulation,
                          private val logInterceptor: LogInterceptor) {
     fun start() {
         log.d("Wypieki v.1.0")

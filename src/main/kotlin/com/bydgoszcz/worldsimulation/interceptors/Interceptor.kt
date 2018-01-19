@@ -1,9 +1,9 @@
 package com.bydgoszcz.worldsimulation.interceptors
 
-import com.bydgoszcz.worldsimulation.worlds.MarketWorld
+import com.bydgoszcz.worldsimulation.worlds.World
 
 open class Interceptor {
-    open fun execute(world: MarketWorld) {
+    open fun execute(world: World) {
 
     }
 }

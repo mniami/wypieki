@@ -1,13 +1,13 @@
 package com.bydgoszcz.worldsimulation.interceptors
 
 import com.bydgoszcz.worldsimulation.utils.Log
-import com.bydgoszcz.worldsimulation.worlds.MarketWorld
+import com.bydgoszcz.worldsimulation.worlds.World
 import java.util.*
 
 class LogInterceptor(val l: Log = Log()) : Interceptor() {
     private val actions = PriorityQueue<String>()
 
-    override fun execute(world: MarketWorld) {
+    override fun execute(world: World) {
         actions.forEach {
             when (it) {
                 "ShowInfo" -> {
