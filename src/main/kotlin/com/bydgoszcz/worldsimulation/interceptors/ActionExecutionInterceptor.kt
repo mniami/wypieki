@@ -13,11 +13,11 @@ class ActionExecutionInterceptor(val l: Log = Log()) : Interceptor() {
         actions.forEach {
             when (it) {
                 "ShowInfo" -> {
-                    l.d(String.format("People: %s\nMarket: %s\nItems: %s\nTime: %s\nRandom: %s\n",
+                    l.d(String.format("People: %s\nMarket: %s\nItems: %s\nTime: %s days\nRandom: %s\n",
                             world.peoples.size,
                             world.markets.size,
                             world.items.size,
-                            world.time,
+                            world.time.days(),
                             world.lastRandom))
                 }
             }

@@ -6,7 +6,7 @@ import com.bydgoszcz.worldsimulation.items.SexType
 import com.bydgoszcz.worldsimulation.utils.xor
 import com.bydgoszcz.worldsimulation.worlds.World
 
-class ReproductiveMan(val world : World, val dad : Person, val mom : Person) : HistoryAction(world.time) {
+class ReproductiveManAction(val world : World, val dad : Person, val mom : Person) : HistoryAction() {
     val boy : Person
 
     init {
@@ -15,7 +15,7 @@ class ReproductiveMan(val world : World, val dad : Person, val mom : Person) : H
         val isMale = newDna[Person.SEX_CHROMOSOME_INDEX] == 1.toByte()
         val sex = if (isMale) SexType.MALE else SexType.FEMALE
 
-        boy = Person(name, dna = newDna, sex = sex, mom = mom, dad = dad)
+        boy = Person(name, dna = newDna, sex = sex, mom = mom, dad = dad, bearthDay = world.time)
         world.peoples.add(boy)
     }
 }
