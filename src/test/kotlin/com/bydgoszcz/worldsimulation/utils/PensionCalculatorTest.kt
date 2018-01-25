@@ -28,19 +28,26 @@ class PensionCalculatorTest {
 
     @Test
     fun rentingFlatCalculation() {
-        val rentYears = 21
-        val gainForFlat = 10000.0
-        var gainForYear = gainForFlat
-        var gainTotal = 0.0
+        //params
+        val monthContribution = 3000.0
+        val tfiGainPerc = 1.04
         val flatCost = 220000.0
+        val rentYears = 26
+        val incomeForFlatOnYear = 1000.0
+        val pensionYears = 30
+
+        // calculations
+        var gainForYear = incomeForFlatOnYear
+        var gainTotal = 0.0
         var totalCapital = flatCost
         var capital = 0.0
-        var flats = 1
-        val tfiGainPerc = 1.04
+        var flats = 0
         var tfiGain = 0.0
-        var yearContribution = 3000.0 * 12
+        var yearContribution = monthContribution * 12
         var tfiGainTotal = 0.0
         var totalContribution = 0.0
+
+        println(String.format("YEAR\tGain total\tTotal capital\t\tFlats\t\tTFI Gain"))
 
         for (i in 0..rentYears) {
             gainTotal += gainForYear
@@ -51,7 +58,7 @@ class PensionCalculatorTest {
             totalCapital = gainTotal + flatCost * flats + capital
             totalContribution += yearContribution
 
-            println (String.format("%s\t\t%s\t%s\t\t%s\t\t%s",
+            println (String.format("%s\t%s\t%s\t\t%s\t\t%s",
                     i,
                     formatter.format(gainTotal),
                     formatter.format(totalCapital),
@@ -60,17 +67,20 @@ class PensionCalculatorTest {
 
             if (capital >= flatCost){
                 capital -= flatCost
-                gainForYear += gainForFlat
+                gainForYear += incomeForFlatOnYear
                 flats++
-                println("New flat bought")
+                //println("New flat bought")
             }
         }
-        println(String.format("\nGain total: %s\nTotal capital: %s\nFlats: %s\nTFI Gain: %s\nTotal contribution: %s\n",
+        val monthPensionFromFlatsRenting = flats * incomeForFlatOnYear
+        println(String.format("\nGain total: %s\nTotal capital + flats: %s\nFlats: %s\nTFI Gain: %s\nTotal contribution: %s\nCapital: %s\nFlats rent month pension: %s",
                 formatter.format(gainTotal),
                 formatter.format(totalCapital),
                 flats,
                 formatter.format(tfiGainTotal),
-                formatter.format(totalContribution)))
+                formatter.format(totalContribution),
+                formatter.format(capital),
+                formatter.format(monthPensionFromFlatsRenting)))
     }
 
     @Test
