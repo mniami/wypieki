@@ -28,17 +28,22 @@ class PensionCalculatorTest {
 
     @Test
     fun rentingFlatCalculation() {
+        // gain = zysk,
+        // tfi = Towarzystwo Funduszy Inwestycyjnych,
+        // yearContribution = coroczne wplaty na konto (oszczedzanie)
+        // flats = mieszkania
+        // tfiGainPerc = procent zysku rocznie z oszczednosci w TFI
+
         //params
-        val monthContribution = 3000.0
+        val monthContribution = 1000.0
         val tfiGainPerc = 1.04
         val flatCost = 220000.0
         val rentYears = 26
-        val incomeForFlatOnYear = 8000.0
+        var flatRentGainForYear = 8000.0
         val pensionYears = 30
 
         // calculations
-        var gainForYear = incomeForFlatOnYear
-        var gainTotal = 0.0
+        var flatRentGainTotal = 0.0
         var totalCapital = flatCost
         var capital = 0.0
         var flats = 0
@@ -50,31 +55,31 @@ class PensionCalculatorTest {
         println(String.format("YEAR\tGain total\tTotal capital\t\tFlats\t\tTFI Gain"))
 
         for (i in 0..rentYears) {
-            gainTotal += gainForYear
-            capital += gainForYear + yearContribution
+            flatRentGainTotal += flatRentGainForYear
+            capital += flatRentGainForYear + yearContribution
             tfiGain = capital * (tfiGainPerc - 1.0)
             tfiGainTotal += tfiGain
             capital += tfiGain
-            totalCapital = gainTotal + flatCost * flats + capital
+            totalCapital = flatRentGainTotal + flatCost * flats + capital
             totalContribution += yearContribution
 
             println (String.format("%s\t%s\t%s\t\t%s\t\t%s",
                     i,
-                    formatter.format(gainTotal),
+                    formatter.format(flatRentGainTotal),
                     formatter.format(totalCapital),
                     flats,
                     formatter.format(tfiGain)))
 
             if (capital >= flatCost){
                 capital -= flatCost
-                gainForYear += incomeForFlatOnYear
+                flatRentGainForYear += flatRentGainForYear
                 flats++
                 //println("New flat bought")
             }
         }
-        val monthPensionFromFlatsRenting = flats * (incomeForFlatOnYear / 12)
+        val monthPensionFromFlatsRenting = flats * (flatRentGainForYear / 12)
         println(String.format("\nGain total: %s\nTotal capital + flats: %s\nFlats: %s\nTFI Gain: %s\nTotal contribution: %s\nCapital: %s\nFlats rent month pension: %s",
-                formatter.format(gainTotal),
+                formatter.format(flatRentGainTotal),
                 formatter.format(totalCapital),
                 flats,
                 formatter.format(tfiGainTotal),
