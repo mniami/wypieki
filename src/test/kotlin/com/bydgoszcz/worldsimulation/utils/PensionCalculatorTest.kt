@@ -33,7 +33,7 @@ class PensionCalculatorTest {
         val tfiGainPerc = 1.04
         val flatCost = 220000.0
         val rentYears = 26
-        val incomeForFlatOnYear = 1000.0
+        val incomeForFlatOnYear = 8000.0
         val pensionYears = 30
 
         // calculations
@@ -72,7 +72,7 @@ class PensionCalculatorTest {
                 //println("New flat bought")
             }
         }
-        val monthPensionFromFlatsRenting = flats * incomeForFlatOnYear
+        val monthPensionFromFlatsRenting = flats * (incomeForFlatOnYear / 12)
         println(String.format("\nGain total: %s\nTotal capital + flats: %s\nFlats: %s\nTFI Gain: %s\nTotal contribution: %s\nCapital: %s\nFlats rent month pension: %s",
                 formatter.format(gainTotal),
                 formatter.format(totalCapital),
