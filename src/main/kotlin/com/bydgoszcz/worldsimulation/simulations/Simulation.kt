@@ -2,6 +2,7 @@ package com.bydgoszcz.worldsimulation.simulations
 
 import com.bydgoszcz.worldsimulation.actions.ActionExecutor
 import com.bydgoszcz.worldsimulation.interceptors.Interceptor
+import com.bydgoszcz.worldsimulation.items.WorldTime
 import com.bydgoszcz.worldsimulation.phases.Phase
 import com.bydgoszcz.worldsimulation.utils.Log
 import com.bydgoszcz.worldsimulation.utils.withIn
@@ -69,5 +70,9 @@ class Simulation(private val world: World = World(),
     }
     fun getCurrentState() : SimulationState {
         return state
+    }
+
+    fun setTime(years: Long) {
+        world.time = WorldTime(years)
     }
 }

@@ -8,7 +8,7 @@ class ActionExecutor(private val world: World) {
     fun addNewMan(manIndex : Int, womanIndex : Int) {
         val random = Random()
 
-        ReproductiveManAction(world, world.peoples[manIndex], world.peoples[womanIndex])
+        ReproductiveManAction(world.peoples[manIndex], world.peoples[womanIndex]).addNewPersonToWorld(world)
     }
     fun giveBirthToChild(child : Person){
         //TODO implement it

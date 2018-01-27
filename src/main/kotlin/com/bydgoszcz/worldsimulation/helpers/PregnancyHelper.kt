@@ -33,6 +33,9 @@ class PregnancyHelper {
             else if (diff < 20){
                 return fortune == 2
             }
+            else {
+                return true
+            }
         }
         return false
     }
