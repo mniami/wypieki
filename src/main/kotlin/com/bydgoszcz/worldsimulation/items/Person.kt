@@ -24,5 +24,9 @@ class Person(var name: String = "",
             return result
         }
     }
+
+    fun getAge(time: WorldTime): WorldTimeSpan {
+        return time - bearthDay
+    }
 }
 

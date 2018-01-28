@@ -29,6 +29,13 @@ class CommandLineConsole(private val log: Log = Log(),
                     "help" -> log.d("show, pause, resume, repro, help, quit, show me [person idx]")
                     "exit" -> System.exit(0)
                 }
+                if (prepared.startsWith("set time")){
+                    val regex = Regex("set time (\\d+)")
+                    val newTimeYears = Integer.parseInt(regex.matchEntire(prepared)?.groups?.get(1)?.value)
+                    if (newTimeYears != null) {
+                        simulation.setTime(newTimeYears * 365L)
+                    }
+                }
                 if (prepared.startsWith("show me")) {
                     val regex = Regex("show me (\\d)")
                     val manId = Integer.parseInt(regex.matchEntire(prepared)?.groups?.get(1)?.value)

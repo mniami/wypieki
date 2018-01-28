@@ -1,11 +1,12 @@
 package com.bydgoszcz.worldsimulation.items
 
-class WorldTime(private var value: Long, private var year : Long = 0) {
+data class WorldTime(private var value: Long) {
+    private var year : Long = 0
     init {
-        value = year / 365
+        year = value / 365
     }
     fun elapsed() {
-        value++
+        value+=77
         year = value / 365
     }
     fun days() : Long = value
@@ -14,7 +15,8 @@ class WorldTime(private var value: Long, private var year : Long = 0) {
     fun year() : Long = year
 
     operator fun minus(otherWorldTime: WorldTime) : WorldTimeSpan
-            = WorldTimeSpan(otherWorldTime.value - value)
+            = WorldTimeSpan(value - otherWorldTime.value)
+    fun value() : Long = value
 }
 class WorldTimeSpan (private var value : Long = 0){
     fun days() = value
