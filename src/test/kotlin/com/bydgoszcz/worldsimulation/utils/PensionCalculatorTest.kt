@@ -29,12 +29,12 @@ class PensionCalculatorTest {
 
     @Test
     fun rentFlat() {
-        RentRoomsInvestment(500.0, 1.4, 100000.0, 35, 12000.0, 30).calculate { }
+        RentRoomsInvestment(2000.0, 4.0, 160000.0, 26, 9600.0, 30).calculate { }
     }
 
     @Test
     fun testRentingFlatCalculation() {
-        val investment = RentRoomsInvestment(1000.0, 1.0, 100000.0, 20, 10000.0, 30)
+        val investment = RentRoomsInvestment(1000.0, 0.0, 100000.0, 20, 10000.0, 30)
         val result = investment.calculate {
             when (it.year) {
                 in 1..8 -> {
@@ -88,7 +88,7 @@ class PensionCalculatorTest {
             }
         }
     }
-                @Test
+    @Test
     fun portfelInwestycyjny() {
 
     }

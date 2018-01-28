@@ -36,7 +36,7 @@ class RentRoomsInvestment(val monthContribution: Double = 1000.0,
             cFlats * (flatRentGain / 12) + cCapital / 12 / pensionYears
         }
 
-        println(String.format("YEAR\tGain total\tTotal capital\t\tFlats\t\tTFI Gain"))
+        println(String.format("YEAR\tFlat gain\tContribution\tTFI Gain\tCapital\t\tFlats\t"))
 
         for (i in 1..rentYears) {
             cFlatRentGainForYear = flatRentGain * cFlats
@@ -59,9 +59,9 @@ class RentRoomsInvestment(val monthContribution: Double = 1000.0,
                     i,
                     formatter.format(cFlatRentGainForYear),
                     formatter.format(cYearContribution),
+                    formatter.format(cTfiGain),
                     formatter.format(cCapital),
-                    cFlats,
-                    formatter.format(cTfiGain)))
+                    cFlats))
 
             investmentStatusListener(RentRoomInvestmentResult(i, cFlatRentGainTotal, cCapital, cTfiGainTotal, cTotalCapital, cTotalContribution, cFlats, cFlatRentGainForYear, monthPensionFromFlatsRenting))
 
