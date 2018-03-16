@@ -5,6 +5,7 @@ import org.testng.annotations.Test
 import java.math.BigDecimal
 import java.math.MathContext
 import java.text.NumberFormat
+import java.util.*
 
 
 class PensionCalculatorTest {
@@ -29,37 +30,46 @@ class PensionCalculatorTest {
 
     @Test
     fun rentFlat() {
-        RentRoomsInvestment(2000.0, 4.0, 160000.0, 26, 9600.0, 30).calculate { }
+        val random = Random()
+        RentRoomsInvestment(RentRoomsParameters(0.0, 11000.0, 220000.0, 2500.0), 26, 30).calculate {
+//            if (it.result.year % 4 == 0 && random.nextBoolean()){
+//                it.parameters.tfiGainPerc = -2.0
+//            }
+//            if (it.result.year % 7 == 0 && random.nextBoolean()){
+//                it.parameters.tfiGainPerc = 2.0
+//            }
+
+        }
     }
 
     @Test
     fun testRentingFlatCalculation() {
-        val investment = RentRoomsInvestment(1000.0, 0.0, 100000.0, 20, 10000.0, 30)
+        val investment = RentRoomsInvestment(RentRoomsParameters(0.0, 10000.0, 100000.0, 1000.0), 20, 30)
         val result = investment.calculate {
-            when (it.year) {
+            when (it.result.year) {
                 in 1..8 -> {
-                    assertEquals(it.capital, it.year * 12000.0, "capital")
-                    assertEquals(it.tfiGainTotal, 0.0, "tfiGainTotal")
-                    assertEquals(it.flats, 0, "flats")
+                    assertEquals(it.result.capital, it.result.year * 12000.0, "capital")
+                    assertEquals(it.result.tfiGainTotal, 0.0, "tfiGainTotal")
+                    assertEquals(it.result.flats, 0, "flats")
                 }
                 9 -> {
-                    assertEquals(it.capital, 8000.0, "capital")
-                    assertEquals(it.tfiGainTotal, 0.0, "tfiGainTotal")
-                    assertEquals(it.flats, 1, "flats")
-                    assertEquals(it.flatGainForYear, 0.0, "flatRentGainForYear")
+                    assertEquals(it.result.capital, 8000.0, "capital")
+                    assertEquals(it.result.tfiGainTotal, 0.0, "tfiGainTotal")
+                    assertEquals(it.result.flats, 1, "flats")
+                    assertEquals(it.result.flatGainForYear, 0.0, "flatRentGainForYear")
                 }
                 14 -> {
-                    assertEquals(it.capital, 18000.0, "capital")
-                    assertEquals(it.tfiGainTotal, 0.0, "tfiGainTotal")
-                    assertEquals(it.flats, 2, "flats")
-                    assertEquals(it.flatGainForYear, 10000.0, "flatRentGainForYear")
+                    assertEquals(it.result.capital, 18000.0, "capital")
+                    assertEquals(it.result.tfiGainTotal, 0.0, "tfiGainTotal")
+                    assertEquals(it.result.flats, 2, "flats")
+                    assertEquals(it.result.flatGainForYear, 10000.0, "flatRentGainForYear")
                 }
                 20 -> {
-                    assertEquals(it.capital, 40000.0, "capital")
-                    assertEquals(it.tfiGainTotal, 0.0, "tfiGainTotal")
-                    assertEquals(it.flats, 4, "flats")
-                    assertEquals(it.flatGainForYear, 30000.0, "flatRentGainForYear")
-                    assertEquals(it.monthPensionFromFlatsRenting, 4.0 * 10000.0 / 12.0 + 40000.0 / 12.0 / 30.0, "")
+                    assertEquals(it.result.capital, 40000.0, "capital")
+                    assertEquals(it.result.tfiGainTotal, 0.0, "tfiGainTotal")
+                    assertEquals(it.result.flats, 4, "flats")
+                    assertEquals(it.result.flatGainForYear, 30000.0, "flatRentGainForYear")
+                    assertEquals(it.result.monthPensionFromFlatsRenting, 4.0 * 10000.0 / 12.0 + 40000.0 / 12.0 / 30.0, "")
                 }
             }
         }
@@ -67,29 +77,29 @@ class PensionCalculatorTest {
 
     @Test
     fun testRentingFlatCalculationWithTfi() {
-        val investment = RentRoomsInvestment(1000.0, 2.0, 100000.0, 20, 10000.0, 30)
+        val investment = RentRoomsInvestment(RentRoomsParameters(2.0, 10000.0, 100000.0, 1000.0), 20, 30)
         val result = investment.calculate {
-            when (it.year) {
+            when (it.result.year) {
                 1 -> {
-                    assertEquals(it.capital, 12000.0, "capital")
-                    assertEquals(it.tfiGainTotal, 0.0, "tfiGainTotal")
-                    assertEquals(it.flats, 0, "flats")
+                    assertEquals(it.result.capital, 12000.0, "capital")
+                    assertEquals(it.result.tfiGainTotal, 0.0, "tfiGainTotal")
+                    assertEquals(it.result.flats, 0, "flats")
                 }
                 2 -> {
-                    assertEquals(it.capital, 24240.0, "capital")
-                    assertEquals(it.tfiGainTotal, 240.0, "tfiGainTotal")
-                    assertEquals(it.flats, 0, "flats")
+                    assertEquals(it.result.capital, 24240.0, "capital")
+                    assertEquals(it.result.tfiGainTotal, 240.0, "tfiGainTotal")
+                    assertEquals(it.result.flats, 0, "flats")
                 }
                 3 -> {
-                    assertEquals(it.capital, 36724.8, "capital")
-                    assertEquals(it.tfiGainTotal, 724.8, "tfiGainTotal")
-                    assertEquals(it.flats, 0, "flats")
+                    assertEquals(it.result.capital, 36724.8, "capital")
+                    assertEquals(it.result.tfiGainTotal, 724.8, "tfiGainTotal")
+                    assertEquals(it.result.flats, 0, "flats")
                 }
             }
         }
     }
     @Test
-    fun portfelInwestycyjny() {
+    fun investmentWallet() {
 
     }
 }

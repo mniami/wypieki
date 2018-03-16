@@ -13,3 +13,5 @@ fun <T> T.withIn(vararg enumItems: T): Boolean {
     }
     return found
 }
+
+fun <E, T:MutableCollection<E>> T.copy() : MutableCollection<E> = this.map {it -> it}.toMutableList()

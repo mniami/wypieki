@@ -6,8 +6,6 @@ import java.util.*
 
 class ActionExecutor(private val world: World) {
     fun addNewMan(manIndex : Int, womanIndex : Int) {
-        val random = Random()
-
         ReproductiveManAction(world.peoples[manIndex], world.peoples[womanIndex]).addNewPersonToWorld(world)
     }
     fun giveBirthToChild(child : Person){

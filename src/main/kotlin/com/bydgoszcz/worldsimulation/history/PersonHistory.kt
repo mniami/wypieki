@@ -8,5 +8,7 @@ class PersonHistory(private val historyEvents: MutableList<HistoryEvent> = Linke
     }
 
     fun filter(filtr: (HistoryEvent) -> Boolean): List<HistoryEvent> = historyEvents.filter(filtr)
+
+    fun singleOrNull(predicate: (HistoryEvent) -> Boolean): HistoryEvent? = historyEvents.singleOrNull(predicate)
 }
 
