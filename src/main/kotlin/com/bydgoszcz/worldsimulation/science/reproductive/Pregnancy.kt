@@ -9,24 +9,17 @@ import com.bydgoszcz.worldsimulation.history.PregnantHistoryEvent
 import com.bydgoszcz.worldsimulation.items.Person
 import com.bydgoszcz.worldsimulation.items.SexType
 import com.bydgoszcz.worldsimulation.items.WorldTime
+import com.bydgoszcz.worldsimulation.utils.findFirstOrNull
 import com.bydgoszcz.worldsimulation.worlds.World
 
 class Pregnancy {
     val minimumAgeToBePregnant = 18
 
     fun isTimeToBePregnant(person: Person, world: World): Boolean {
-        val pregnancy = world.science.pregnancy
-        val currentCoupleEvent = person.getCurrentCouple(world)
+        val currentCoupleEvent = person.getCurrentCouple(world) ?: return false
 
-        if (currentCoupleEvent == null) {
-            return false
-        }
-
-        if (!currentCoupleEvent.person1.areAbleToHaveKid(world) ||
-                !currentCoupleEvent.person2.areAbleToHaveKid(world)) {
-            return false
-        }
-        return true
+        return currentCoupleEvent.person1.areAbleToHaveKid(world) &&
+                currentCoupleEvent.person2.areAbleToHaveKid(world)
     }
 
     fun bePregnant(it: Person, currentCoupleEvent: CoupleHistoryEvent, world: World) {
@@ -45,7 +38,7 @@ class Pregnancy {
     }
 
     fun findPregnantHistoryEvent(person: Person): PregnantHistoryEvent? {
-        return person.history.singleOrNull { it is PregnantHistoryEvent } as PregnantHistoryEvent?
+        return person.history.events.findFirstOrNull()
     }
 
     fun isTimeForDelivery(pregnantEvent: PregnantHistoryEvent?, randomHelper: RandomHelper, currentTime: WorldTime): Boolean {

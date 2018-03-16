@@ -1,40 +1,36 @@
 package com.bydgoszcz.worldsimulation.science.relationships
 
-import com.bydgoszcz.worldsimulation.extensions.getCurrentCouple
 import com.bydgoszcz.worldsimulation.history.CoupleHistoryEvent
 import com.bydgoszcz.worldsimulation.items.Person
 import com.bydgoszcz.worldsimulation.worlds.World
 
 class Relationship {
-    private val minimumCouplAge = 10
+    val minCoupleAge = 10
 
-    fun lookForCouple(it: Person, world: World) : Boolean{
-        if (it.getAge(world.time).years() < minimumCouplAge){
+    fun lookForCouple(person: Person, world: World) : Boolean{
+        if (person.getAge(world.time).years() < minCoupleAge){
             return false
         }
         val listCandidates = world.peoples.filter { possibleCouple ->
-            if (it != possibleCouple &&
-                    it.sex != possibleCouple.sex &&
-                    possibleCouple.getAge(world.time).years() >= minimumCouplAge) {
-                return@filter true
-            }
-            return@filter false
+            return@filter person != possibleCouple &&
+                    person.sex != possibleCouple.sex &&
+                    possibleCouple.getAge(world.time).years() >= minCoupleAge
         }
         if (listCandidates.isEmpty()){
             return false
         }
         val candidateIdx = world.random.getNext(listCandidates.size)
         val candidatePerson = listCandidates[candidateIdx]
-        val newCoupleEvent = CoupleHistoryEvent(it, candidatePerson, world.time, null)
+        val newCoupleEvent = CoupleHistoryEvent(person, candidatePerson, world.time, null)
 
         candidatePerson.history.add(newCoupleEvent)
-        it.history.add(newCoupleEvent)
+        person.history.add(newCoupleEvent)
 
         return true
     }
     fun getCurrentCouple(person: Person) : CoupleHistoryEvent? {
-        return person.history.filter {
+        return person.history.events.firstOrNull{
             it is CoupleHistoryEvent && it.endTime == null
-        }.firstOrNull() as CoupleHistoryEvent?
+        } as CoupleHistoryEvent?
     }
 }

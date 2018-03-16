@@ -1,8 +1,5 @@
 package com.bydgoszcz.worldsimulation.utils
 
-import java.util.*
-import kotlin.experimental.xor
-
 fun <T> T.withIn(vararg enumItems: T): Boolean {
     var found = false
     enumItems.iterator().forEachRemaining {
@@ -15,3 +12,4 @@ fun <T> T.withIn(vararg enumItems: T): Boolean {
 }
 
 fun <E, T:MutableCollection<E>> T.copy() : MutableCollection<E> = this.map {it -> it}.toMutableList()
+inline fun <reified K:T, T> List<T>.findFirstOrNull(): K? = firstOrNull { it is K} as K?
