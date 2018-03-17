@@ -3,7 +3,7 @@ package com.bydgoszcz.worldsimulation.items
 import com.bydgoszcz.worldsimulation.history.PersonHistory
 import java.util.*
 
-class Person(var name: String = "",
+data class Person(var name: String = "",
              var bearthDay: WorldTime = WorldTime(0),
              var sex: SexType = SexType.MALE,
              var dna: ByteArray = createDna(),

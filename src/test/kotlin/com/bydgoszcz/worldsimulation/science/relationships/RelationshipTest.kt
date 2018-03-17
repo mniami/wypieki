@@ -72,7 +72,6 @@ class RelationshipTest {
         }
     }
 
-
     @Test
     fun testGetCurrentCouple_success() {
         whenever(person.getAge(any())).thenReturn(WorldTimeSpan.fromYears(20))

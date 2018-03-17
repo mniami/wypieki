@@ -1,7 +1,6 @@
 package com.bydgoszcz.worldsimulation.science.reproductive
 
 import com.bydgoszcz.worldsimulation.actions.ReproductiveManAction
-import com.bydgoszcz.worldsimulation.extensions.areAbleToHaveKid
 import com.bydgoszcz.worldsimulation.extensions.getCurrentCouple
 import com.bydgoszcz.worldsimulation.helpers.RandomHelper
 import com.bydgoszcz.worldsimulation.history.CoupleHistoryEvent
@@ -13,13 +12,13 @@ import com.bydgoszcz.worldsimulation.utils.findFirstOrNull
 import com.bydgoszcz.worldsimulation.worlds.World
 
 class Pregnancy {
-    val minimumAgeToBePregnant = 18
+    val minAgeToBePregnant = 18
 
     fun isTimeToBePregnant(person: Person, world: World): Boolean {
         val currentCoupleEvent = person.getCurrentCouple(world) ?: return false
 
-        return currentCoupleEvent.person1.areAbleToHaveKid(world) &&
-                currentCoupleEvent.person2.areAbleToHaveKid(world)
+        return areAbleToHaveKid(currentCoupleEvent.person1, world) &&
+                areAbleToHaveKid(currentCoupleEvent.person2, world)
     }
 
     fun bePregnant(it: Person, currentCoupleEvent: CoupleHistoryEvent, world: World) {
@@ -66,5 +65,5 @@ class Pregnancy {
         world.peoples.add(pregnantEvent.kid)
     }
 
-    fun areAbleToHaveKid(person: Person, world: World): Boolean = person.getAge(world.time).years() > minimumAgeToBePregnant
+    fun areAbleToHaveKid(person: Person, world: World): Boolean = person.getAge(world.time).years() >= minAgeToBePregnant
 }

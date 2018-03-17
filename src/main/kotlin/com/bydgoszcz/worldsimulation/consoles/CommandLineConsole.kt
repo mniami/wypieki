@@ -26,7 +26,7 @@ class CommandLineConsole(private val log: Log = Log(),
                     "repro" -> {
                         simulation.getActionExecutor().addNewMan(0, 1)
                     }
-                    "help" -> log.d("show, pause, resume, repro, help, quit, show me [person idx]")
+                    "help" -> log.d("show, pause, resume, repro, help, quit, show me [person idx], set time [time in years]")
                     "exit" -> System.exit(0)
                 }
                 if (prepared.startsWith("set time")){
