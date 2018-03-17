@@ -4,12 +4,12 @@ import com.bydgoszcz.worldsimulation.history.PersonHistory
 import java.util.*
 
 class Person(var name: String = "",
-             var bearthDay: WorldTime,
+             var bearthDay: WorldTime = WorldTime(0),
              var sex: SexType = SexType.MALE,
              var dna: ByteArray = createDna(),
              var history: PersonHistory = PersonHistory(),
-             val mom: Person?,
-             val dad: Person?) {
+             val mom: Person? = null,
+             val dad: Person? = null) {
     companion object {
         val DNA_LENGTH = 100
         val SEX_CHROMOSOME_INDEX = 44
