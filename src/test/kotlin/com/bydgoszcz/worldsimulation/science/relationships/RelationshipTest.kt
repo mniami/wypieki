@@ -37,12 +37,6 @@ class RelationshipTest {
 
     @BeforeTest
     fun setUp() {
-//        person = mock()
-//        person2 = mock()
-//        world = mock()
-//        history = mock()
-//        random = mock()
-
         initMocks(this)
 
         whenever(person.sex).thenReturn(SexType.MALE)
