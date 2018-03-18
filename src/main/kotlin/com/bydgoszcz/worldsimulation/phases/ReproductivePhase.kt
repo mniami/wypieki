@@ -32,7 +32,7 @@ class ReproductivePhase : Phase("Reproductive phase") {
             return
         }
 
-        if (pregnancy.isTimeForDelivery(pregnantEvent, world.random, world.time)) {
+        if (pregnancy.isTimeForBirth(pregnantEvent, world.random, world.time)) {
             pregnancy.giveBirthToChild(pregnantEvent, world)
         }
     }

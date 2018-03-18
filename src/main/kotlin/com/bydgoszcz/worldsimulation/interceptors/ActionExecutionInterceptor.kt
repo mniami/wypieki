@@ -19,7 +19,7 @@ class ActionExecutionInterceptor(val l: Log = Log()) : Interceptor() {
                             world.items.size,
                             world.time.year(),
                             world.time.days(),
-                            world.lastRandom))
+                            world.globalRandoms))
                 }
             }
             actions.remove(it)

@@ -8,17 +8,23 @@ import com.bydgoszcz.worldsimulation.history.PregnantHistoryEvent
 import com.bydgoszcz.worldsimulation.items.Person
 import com.bydgoszcz.worldsimulation.items.SexType
 import com.bydgoszcz.worldsimulation.items.WorldTime
+import com.bydgoszcz.worldsimulation.science.DnaHelper
+import com.bydgoszcz.worldsimulation.science.PersonMath
+import com.bydgoszcz.worldsimulation.science.WillCalcItem
 import com.bydgoszcz.worldsimulation.utils.findFirstOrNull
 import com.bydgoszcz.worldsimulation.worlds.World
 
 class Pregnancy {
     val minAgeToBePregnant = 18
+    val pregnancyMonthAmount = 9
+    val pregnancyDaysAmount = pregnancyMonthAmount * 30
 
     fun isTimeToBePregnant(person: Person, world: World): Boolean {
         val currentCoupleEvent = person.getCurrentCouple(world) ?: return false
 
         return areAbleToHaveKid(currentCoupleEvent.person1, world) &&
-                areAbleToHaveKid(currentCoupleEvent.person2, world)
+                areAbleToHaveKid(currentCoupleEvent.person2, world) &&
+                isWillingToHaveKid(person, world)
     }
 
     fun bePregnant(it: Person, currentCoupleEvent: CoupleHistoryEvent, world: World) {
@@ -37,25 +43,26 @@ class Pregnancy {
     }
 
     fun findPregnantHistoryEvent(person: Person): PregnantHistoryEvent? {
-        return person.history.events.findFirstOrNull()
+        return person.history.events.findFirstOrNull { it is PregnantHistoryEvent && it.bearthTime == null}
     }
 
-    fun isTimeForDelivery(pregnantEvent: PregnantHistoryEvent?, randomHelper: RandomHelper, currentTime: WorldTime): Boolean {
-        if (pregnantEvent?.bearthTime != null) {
-            val bs = currentTime - pregnantEvent.begettingTime
-            val typicalPregnancyPeriod = 9 * 30
-            val fortune = randomHelper.getNext(3)
-            val diff = Math.abs(typicalPregnancyPeriod - bs.days())
+    fun isTimeForBirth(pregnantEvent: PregnantHistoryEvent, randomHelper: RandomHelper, currentTime: WorldTime): Boolean {
+        if (pregnantEvent.bearthTime != null) {
+            return false
+        }
+        val currentPregnancyPeriod = currentTime - pregnantEvent.begettingTime
+        val fortune = randomHelper.getNext(3)
+        val diff = pregnancyDaysAmount - currentPregnancyPeriod.days()
 
-            if (diff < -10) {
-                return true
-            } else if (diff < 0) {
-                return fortune == 1
-            } else if (diff < 20) {
-                return fortune == 2
-            } else {
-                return true
-            }
+        // diff less than 0, it's after pregnancy period, should birth
+        if (diff < -10) {
+            return true
+        } else if (diff < 0) {
+            return fortune == 1
+        } else if (diff < 20) {
+            return fortune == 2
+        } else {
+            return true
         }
         return false
     }
@@ -64,6 +71,26 @@ class Pregnancy {
         pregnantEvent.begettingTime = world.time
         world.peoples.add(pregnantEvent.kid)
     }
+
+    fun isWillingToHaveKid(person: Person, world: World) : Boolean{
+        if (isPregnant(person)){
+            return false
+        }
+        val personMath = PersonMath()
+        val dnaHelper = DnaHelper()
+
+        val lastPregnancy = person.history.events.lastOrNull{ it is PregnantHistoryEvent } as PregnantHistoryEvent?
+        var dnaInfluence = dnaHelper.dnaValue(person, DnaHelper.DnaIndex.WillingToHaveKids)
+        val experienceInfluence = if (lastPregnancy == null) 1.0 else 0.5
+        val will = personMath.calcWill(listOf(
+                WillCalcItem(dnaInfluence, 0.3),
+                WillCalcItem(world.globalRandoms.social, 0.3),
+                WillCalcItem(experienceInfluence, 0.3)))
+
+        return personMath.isWill(will)
+    }
+
+    fun isPregnant(person: Person): Boolean = findPregnantHistoryEvent(person) != null
 
     fun areAbleToHaveKid(person: Person, world: World): Boolean = person.getAge(world.time).years() >= minAgeToBePregnant
 }

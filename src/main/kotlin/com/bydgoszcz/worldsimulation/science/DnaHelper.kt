@@ -1,9 +1,18 @@
 package com.bydgoszcz.worldsimulation.science
 
+import com.bydgoszcz.worldsimulation.items.Person
 import java.util.*
 import kotlin.experimental.xor
 
 class DnaHelper {
+    enum class DnaIndex {
+        WillingToHaveKids
+    }
+
+    fun dnaValue(person: Person, dnaIndex: DnaIndex) : Double {
+        return person.dna[dnaIndex.ordinal] / 255.0
+    }
+
     fun dnaXor(array1 : ByteArray, array2: ByteArray) : ByteArray{
         val result = ByteArray(Math.max(array1.size, array2.size))
         val random = Random()
