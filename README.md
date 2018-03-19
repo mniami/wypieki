@@ -1,2 +1,5 @@
 <img src='https://travis-ci.org/mniami/wypieki.svg?branch=master'/>
-# wypieki
+
+# Introduction
+
+Small simulation software world imitiating human nation evolution and multiplication process.
