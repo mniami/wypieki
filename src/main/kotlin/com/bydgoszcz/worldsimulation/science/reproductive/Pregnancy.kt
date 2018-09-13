@@ -85,7 +85,7 @@ class Pregnancy {
         val will = personMath.calcWill(listOf(
                 WillCalcItem(dnaInfluence, 0.3),
                 WillCalcItem(world.globalRandoms.social, 0.3),
-                WillCalcItem(experienceInfluence, 0.3)))
+                WillCalcItem(experienceInfluence, 0.4)))
 
         return personMath.isWill(will)
     }

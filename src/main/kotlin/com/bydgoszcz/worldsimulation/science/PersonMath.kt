@@ -13,7 +13,7 @@ class PersonMath {
     }
 
     fun isWill(will: Double): Boolean {
-        return will > 0.7
+        return will > 0.5
     }
 }
 
